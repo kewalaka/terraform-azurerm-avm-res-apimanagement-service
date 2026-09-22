@@ -246,6 +246,33 @@ run "allows_portal_settings_on_v2_sku" {
   }
 }
 
+run "omits_client_certificate_property_for_non_consumption_skus" {
+  command = plan
+
+  variables {
+    sku_name = "Developer_1"
+  }
+
+  assert {
+    condition     = !contains(keys(azapi_resource.this.body.properties), "enableClientCertificate")
+    error_message = "Non-Consumption APIM SKUs must omit enableClientCertificate from the ARM request body."
+  }
+}
+
+run "sends_client_certificate_property_for_consumption_skus" {
+  command = plan
+
+  variables {
+    client_certificate_enabled = true
+    sku_name                   = "Consumption_0"
+  }
+
+  assert {
+    condition     = azapi_resource.this.body.properties.enableClientCertificate
+    error_message = "Consumption APIM SKUs must send enableClientCertificate when configured."
+  }
+}
+
 run "rejects_invalid_backend_pool" {
   command = plan
 
