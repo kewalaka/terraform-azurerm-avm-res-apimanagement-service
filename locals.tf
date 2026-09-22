@@ -115,12 +115,11 @@ locals {
   )
 
   resource_body = {
-    properties = {
+    properties = merge({
       publisherEmail          = var.publisher_email
       publisherName           = var.publisher_name
       notificationSenderEmail = var.notification_sender_email
       disableGateway          = var.gateway_disabled
-      enableClientCertificate = var.client_certificate_enabled
       publicIpAddressId       = var.public_ip_address_id
       publicNetworkAccess     = var.public_network_access_enabled == null ? null : (var.public_network_access_enabled ? "Enabled" : "Disabled")
       virtualNetworkType      = var.virtual_network_type
@@ -148,7 +147,10 @@ locals {
       certificates           = local.certificates
       hostnameConfigurations = local.hostname_configurations
       customProperties       = length(local.custom_properties) == 0 ? null : local.custom_properties
-    }
+      },
+      startswith(local.sku.name, "Consumption") ? {
+        enableClientCertificate = var.client_certificate_enabled
+    } : {})
     sku   = local.sku
     zones = var.zones
   }
