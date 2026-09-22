@@ -273,6 +273,19 @@ run "sends_client_certificate_property_for_consumption_skus" {
   }
 }
 
+run "replaces_service_for_immutable_properties" {
+  command = plan
+
+  assert {
+    condition = azapi_resource.this.replace_triggers_refs == tolist([
+      "properties.virtualNetworkConfiguration",
+      "properties.virtualNetworkType",
+      "sku.name",
+    ])
+    error_message = "APIM service SKU type and virtual network changes must replace the service."
+  }
+}
+
 run "rejects_invalid_backend_pool" {
   command = plan
 

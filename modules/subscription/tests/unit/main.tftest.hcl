@@ -39,3 +39,15 @@ run "custom_keys_use_write_only_body" {
     error_message = "Custom subscription keys must be sent only through the write-only body."
   }
 }
+
+run "replaces_subscription_for_immutable_properties" {
+  command = plan
+
+  assert {
+    condition = azapi_resource.this.replace_triggers_refs == tolist([
+      "properties.ownerId",
+      "properties.scope",
+    ])
+    error_message = "Subscription scope and owner changes must replace the subscription."
+  }
+}

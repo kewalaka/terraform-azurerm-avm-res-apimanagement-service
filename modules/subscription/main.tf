@@ -5,6 +5,10 @@ resource "azapi_resource" "this" {
   body                   = local.resource_body
   ignore_body_changes    = length(var.ignore_body_changes.apimanagement_service_subscriptions) > 0 ? var.ignore_body_changes.apimanagement_service_subscriptions : null
   response_export_values = []
+  replace_triggers_refs = [
+    "properties.ownerId",
+    "properties.scope",
+  ]
   retry                  = var.retry
   sensitive_body         = local.sensitive_body
   sensitive_body_version = local.sensitive_body_version

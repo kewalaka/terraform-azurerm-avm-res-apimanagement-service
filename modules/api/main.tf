@@ -18,6 +18,9 @@ resource "azapi_resource" "this" {
     "properties.serviceUrl",
     "properties.subscriptionRequired",
   ]
+  replace_triggers_refs = [
+    "properties.apiRevision",
+  ]
   retry                  = var.retry
   sensitive_body         = local.sensitive_body
   sensitive_body_version = local.sensitive_body_version
