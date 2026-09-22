@@ -21,6 +21,11 @@ resource "azapi_resource" "this" {
     "properties.scmUrl",
     "properties.targetProvisioningState",
   ]
+  replace_triggers_refs = [
+    "properties.virtualNetworkConfiguration",
+    "properties.virtualNetworkType",
+    "sku.name",
+  ]
   retry = var.retry
   sensitive_body = length(local.sensitive_certificates) > 0 || length(local.sensitive_hostname_configurations) > 0 ? {
     properties = merge(
