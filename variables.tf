@@ -115,6 +115,7 @@ variable "apis" {
     # Basic API properties
     display_name          = string
     path                  = string
+    api_type              = optional(string, "http")
     protocols             = optional(list(string), ["https"])
     revision              = optional(string, "1")
     service_url           = optional(string)
@@ -276,6 +277,7 @@ APIs for the API Management service. APIs define the operations available to API
 
 - `display_name` - (Required) The display name of the API.
 - `path` - (Required) The relative path for the API. Must be unique within the API Management service.
+- `api_type` - (Optional) The API type sent as the ARM `apiType` property. Defaults to `http` for REST and OpenAPI APIs.
 - `protocols` - (Optional) A list of protocols the API supports. Valid values: `http`, `https`, `ws`, `wss`. Defaults to `["https"]`.
 - `revision` - (Optional) The revision number of the API. Defaults to `"1"`.
 - `service_url` - (Optional) The backend service URL for the API.
@@ -307,6 +309,7 @@ apis = {
   "petstore-api" = {
     display_name = "Petstore API"
     path         = "petstore"
+    api_type     = "http"
     protocols    = ["https"]
     service_url  = "https://petstore.swagger.io/v2"
 
@@ -329,6 +332,13 @@ DESCRIPTION
       can(regex("^[^*#&+:<>?]+$", v.path))
     ])
     error_message = "API path cannot contain the following characters: *, #, &, +, :, <, >, ?."
+  }
+  validation {
+    condition = alltrue([
+      for v in values(var.apis) :
+      length(trimspace(v.api_type)) > 0
+    ])
+    error_message = "API type must not be empty."
   }
   validation {
     condition = alltrue([

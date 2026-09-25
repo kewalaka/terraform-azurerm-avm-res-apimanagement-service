@@ -177,6 +177,7 @@ Description: APIs for the API Management service. APIs define the operations ava
 
 - `display_name` - (Required) The display name of the API.
 - `path` - (Required) The relative path for the API. Must be unique within the API Management service.
+- `api_type` - (Optional) The API type sent as the ARM `apiType` property. Defaults to `http` for REST and OpenAPI APIs.
 - `protocols` - (Optional) A list of protocols the API supports. Valid values: `http`, `https`, `ws`, `wss`. Defaults to `["https"]`.
 - `revision` - (Optional) The revision number of the API. Defaults to `"1"`.
 - `service_url` - (Optional) The backend service URL for the API.
@@ -208,6 +209,7 @@ apis = {
   "petstore-api" = {
     display_name = "Petstore API"
     path         = "petstore"
+    api_type     = "http"
     protocols    = ["https"]
     service_url  = "https://petstore.swagger.io/v2"
 
@@ -229,6 +231,7 @@ map(object({
     # Basic API properties
     display_name          = string
     path                  = string
+    api_type              = optional(string, "http")
     protocols             = optional(list(string), ["https"])
     revision              = optional(string, "1")
     service_url           = optional(string)

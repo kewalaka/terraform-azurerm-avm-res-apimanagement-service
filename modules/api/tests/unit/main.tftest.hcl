@@ -21,3 +21,15 @@ run "replaces_api_for_revision_changes" {
     error_message = "API revision changes must replace the API."
   }
 }
+
+run "serializes_api_type_as_api_type" {
+  command = plan
+
+  assert {
+    condition = (
+      azapi_resource.this.body.properties.apiType == "http" &&
+      !contains(keys(azapi_resource.this.body.properties), "type")
+    )
+    error_message = "API type must be serialized as the ARM apiType property without the legacy type property."
+  }
+}

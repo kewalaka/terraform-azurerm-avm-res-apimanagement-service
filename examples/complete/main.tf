@@ -71,6 +71,7 @@ module "apim" {
     "echo-api" = {
       display_name          = "Echo API"
       path                  = "echo"
+      api_type              = "http"
       protocols             = ["https"]
       revision              = "1"
       description           = "Simple echo API for testing - returns request information"
