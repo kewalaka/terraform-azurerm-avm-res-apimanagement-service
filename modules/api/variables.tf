@@ -50,8 +50,14 @@ variable "api_revision_description" {
 
 variable "api_type" {
   type        = string
-  default     = null
-  description = "Type of API: `http`, `soap`, `websocket`, or `graphql`."
+  default     = "http"
+  nullable    = false
+  description = "Type of API sent as the ARM `apiType` property. Defaults to `http` for REST and OpenAPI APIs."
+
+  validation {
+    condition     = length(trimspace(var.api_type)) > 0
+    error_message = "`api_type` must not be empty."
+  }
 }
 
 variable "api_version" {
@@ -257,12 +263,6 @@ variable "translate_required_query_parameters" {
   type        = string
   default     = null
   description = "Strategy for translating required query parameters: `template` or `query`."
-}
-
-variable "type" {
-  type        = string
-  default     = null
-  description = "Type of API (legacy ARM `type` property)."
 }
 
 variable "value" {

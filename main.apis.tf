@@ -45,6 +45,7 @@ module "api" {
   path                     = each.value.path
   api_revision             = each.value.revision
   api_revision_description = each.value.revision_description
+  api_type                 = each.value.api_type
   api_version              = each.value.api_version
   api_version_set_id       = each.value.api_version_set_name != null ? module.api_version_set[each.value.api_version_set_name].resource_id : null
   authentication_settings = each.value.oauth2_authorization != null || each.value.openid_authentication != null ? {

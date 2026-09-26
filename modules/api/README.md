@@ -72,11 +72,11 @@ Default: `null`
 
 ### <a name="input_api_type"></a> [api\_type](#input\_api\_type)
 
-Description: Type of API: `http`, `soap`, `websocket`, or `graphql`.
+Description: Type of API sent as the ARM `apiType` property. Defaults to `http` for REST and OpenAPI APIs.
 
 Type: `string`
 
-Default: `null`
+Default: `"http"`
 
 ### <a name="input_api_version"></a> [api\_version](#input\_api\_version)
 
@@ -322,14 +322,6 @@ Default: `null`
 ### <a name="input_translate_required_query_parameters"></a> [translate\_required\_query\_parameters](#input\_translate\_required\_query\_parameters)
 
 Description: Strategy for translating required query parameters: `template` or `query`.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_type"></a> [type](#input\_type)
-
-Description: Type of API (legacy ARM `type` property).
 
 Type: `string`
 

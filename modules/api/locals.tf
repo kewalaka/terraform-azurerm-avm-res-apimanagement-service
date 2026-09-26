@@ -53,7 +53,6 @@ locals {
       subscriptionRequired              = var.subscription_required
       termsOfServiceUrl                 = var.terms_of_service_url
       translateRequiredQueryParameters = var.translate_required_query_parameters
-      type                              = var.type
     }
   }
 

@@ -142,6 +142,7 @@ module "apim" {
     "ai-foundry-api" = {
       display_name          = "AI Foundry API"
       path                  = "ai"
+      api_type              = "http"
       protocols             = ["https"]
       revision              = "1"
       description           = "Azure AI Foundry API with managed identity authentication"
